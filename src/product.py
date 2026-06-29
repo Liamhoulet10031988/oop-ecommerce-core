@@ -14,8 +14,19 @@ class Product:
         self.quantity = quantity
 
     @classmethod
-    def new_product(cls, product_data: dict) -> "Product":
+    def new_product(
+            cls,
+            product_data: dict,
+            products: list["Product"] | None = None,
+    ) -> "Product":
         """Создает товар из словаря с данными."""
+        if products is not None:
+            for product in products:
+                if product.name == product_data["name"]:
+                    product.quantity += product_data["quantity"]
+                    product.price = max(product.price, product_data["price"])
+                    return product
+
         return cls(
             product_data["name"],
             product_data["description"],
@@ -34,5 +45,11 @@ class Product:
         if new_price <= 0:
             print("Цена не должна быть нулевая или отрицательная")
             return
+
+        if new_price < self.__price:
+            user_answer = input("Цена снижается. Подтвердить? y/n: ")
+
+            if user_answer != "y":
+                return
 
         self.__price = new_price

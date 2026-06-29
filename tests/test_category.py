@@ -9,8 +9,14 @@ def test_category_init() -> None:
 
     assert category.name == "Smartphones"
     assert category.description == "Mobile phones"
-    assert "Iphone 15, 210000.0 руб. Остаток: 8 шт." in category.products
-    assert "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт." in category.products
+    assert (
+        "Iphone 15, 210000.0 руб. Остаток: 8 шт."
+        in category.products
+    )
+    assert (
+        "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт."
+        in category.products
+    )
 
 
 def test_category_count() -> None:
@@ -40,6 +46,12 @@ def test_add_product() -> None:
 
     category.add_product(product2)
 
-    assert "Iphone 15, 210000.0 руб. Остаток: 8 шт." in category.products
-    assert "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт." in category.products
+    assert (
+        "Iphone 15, 210000.0 руб. Остаток: 8 шт."
+        in category.products
+    )
+    assert (
+        "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт."
+        in category.products
+    )
     assert Category.product_count == 2
