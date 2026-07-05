@@ -15,9 +15,9 @@ class Product:
 
     @classmethod
     def new_product(
-            cls,
-            product_data: dict,
-            products: list["Product"] | None = None,
+        cls,
+        product_data: dict,
+        products: list["Product"] | None = None,
     ) -> "Product":
         """Создает товар из словаря с данными."""
         if products is not None:
@@ -53,3 +53,11 @@ class Product:
                 return
 
         self.__price = new_price
+
+    def __str__(self) -> str:
+        """Возвращает строковое представление товара."""
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other: "Product") -> float:
+        """Возвращает полную стоимость двух товаров на складе."""
+        return self.price * self.quantity + other.price * other.quantity

@@ -88,3 +88,16 @@ def test_new_product_updates_existing_product() -> None:
     assert result is product
     assert product.quantity == 10
     assert product.price == 220000.0
+
+
+def test_product_str() -> None:
+    product = Product("Iphone 15", "512GB", 210000.0, 8)
+
+    assert str(product) == "Iphone 15, 210000.0 руб. Остаток: 8 шт."
+
+
+def test_product_add() -> None:
+    product1 = Product("A", "Test product", 100, 10)
+    product2 = Product("B", "Test product", 200, 2)
+
+    assert product1 + product2 == 1400

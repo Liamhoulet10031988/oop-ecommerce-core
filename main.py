@@ -1,26 +1,34 @@
 from src.category import Category
+from src.category_iterator import CategoryIterator
 from src.product import Product
 
 if __name__ == "__main__":
     product1 = Product(
         "Samsung Galaxy S23 Ultra",
-        "256GB, Серый цвет, 200MP камера",
+        "256GB, серый цвет, 200MP камера",
         180000.0,
         5,
     )
     product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
-    product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
+    product3 = Product("Xiaomi Redmi Note 11", "1024GB, синий", 31000.0, 14)
 
-    category1 = Category(
+    category = Category(
         "Смартфоны",
         (
             "Смартфоны, как средство не только коммуникации, "
-            "но и получения дополнительных функций для удобства жизни"
+            "но и получения дополнительных функций"
         ),
         [product1, product2, product3],
     )
 
-    print(category1.products)
+    print("Строковое представление товара:")
+    print(product1)
+
+    print("\nСтроковое представление категории:")
+    print(category)
+
+    print("\nСписок товаров категории:")
+    print(category.products)
 
     product4 = Product(
         '55" QLED 4K',
@@ -28,30 +36,39 @@ if __name__ == "__main__":
         123000.0,
         7,
     )
-    category1.add_product(product4)
+    category.add_product(product4)
 
-    print(category1.products)
-    print(category1.product_count)
+    print("Список товаров после добавления нового товара:")
+    print(category.products)
 
-    new_product = Product.new_product(
-        {
-            "name": "Samsung Galaxy S23 Ultra",
-            "description": "256GB, Серый цвет, 200MP камера",
-            "price": 180000.0,
-            "quantity": 5,
-        }
+    total_price = product1 + product2
+    print("Полная стоимость двух товаров на складе:")
+    print(total_price)
+
+    product_data = {
+        "name": "Iphone 15",
+        "description": "512GB, Gray space",
+        "price": 220000.0,
+        "quantity": 2,
+    }
+    updated_product = Product.new_product(
+        product_data,
+        category.product_objects,
     )
 
-    print(new_product.name)
-    print(new_product.description)
-    print(new_product.price)
-    print(new_product.quantity)
+    print("\nТовар после обновления через new_product:")
+    print(updated_product)
 
-    new_product.price = 800
-    print(new_product.price)
+    updated_product.price = 230000.0
+    print("\nЦена после работы setter:")
+    print(updated_product.price)
 
-    new_product.price = -100
-    print(new_product.price)
+    updated_product.price = -100
+    print("Цена после попытки установить отрицательное значение:")
+    print(updated_product.price)
 
-    new_product.price = 0
-    print(new_product.price)
+    print("\nПеребор товаров категории через CategoryIterator:")
+    iterator = CategoryIterator(category)
+
+    for product in iterator:
+        print(product)

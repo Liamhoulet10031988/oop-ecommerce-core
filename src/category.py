@@ -31,9 +31,20 @@ class Category:
         result = ""
 
         for product in self.__products:
-            result += (
-                f"{product.name}, {product.price} руб. "
-                f"Остаток: {product.quantity} шт.\n"
-            )
+            result += str(product) + "\n"
 
         return result
+
+    @property
+    def product_objects(self) -> list[Product]:
+        """Возвращает список объектов товаров категории."""
+        return self.__products
+
+    def __str__(self) -> str:
+        """Возвращает строковое представление категории."""
+        total_quantity = 0
+
+        for product in self.__products:
+            total_quantity += product.quantity
+
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
