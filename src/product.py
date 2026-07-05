@@ -59,5 +59,8 @@ class Product:
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
     def __add__(self, other: "Product") -> float:
-        """Возвращает полную стоимость двух товаров на складе."""
+        """Возвращает полную стоимость двух товаров одного класса."""
+        if type(self) is not type(other):
+            raise TypeError("Складывать можно только товары одного типа")
+
         return self.price * self.quantity + other.price * other.quantity

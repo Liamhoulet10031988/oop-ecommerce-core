@@ -1,4 +1,8 @@
+import pytest
+
+from src.lawn_grass import LawnGrass
 from src.product import Product
+from src.smartphone import Smartphone
 
 
 def test_product_init() -> None:
@@ -101,3 +105,28 @@ def test_product_add() -> None:
     product2 = Product("B", "Test product", 200, 2)
 
     assert product1 + product2 == 1400
+
+
+def test_product_add_rejects_different_product_classes() -> None:
+    smartphone = Smartphone(
+        "Iphone 15",
+        "512GB, Gray space",
+        210000.0,
+        8,
+        98.2,
+        "15",
+        512,
+        "gray space",
+    )
+    lawn_grass = LawnGrass(
+        "Газонная трава",
+        "Элитная трава для газона",
+        500.0,
+        20,
+        "Россия",
+        "7 дней",
+        "зеленый",
+    )
+
+    with pytest.raises(TypeError):
+        smartphone + lawn_grass
