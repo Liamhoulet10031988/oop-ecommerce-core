@@ -34,3 +34,23 @@ def test_lawn_grass_is_product() -> None:
     )
 
     assert isinstance(lawn_grass, Product)
+
+
+def test_lawn_grass_print_mixin(capsys) -> None:
+    LawnGrass(
+        "Grass",
+        "local",
+        5.8,
+        2,
+        "China",
+        "2 days",
+        "green",
+    )
+
+    message = capsys.readouterr().out
+
+    assert (
+        "LawnGrass('Grass', 'local', 5.8, 2, "
+        "'China', '2 days', 'green')"
+        in message
+    )

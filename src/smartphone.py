@@ -15,8 +15,18 @@ class Smartphone(Product):
         memory: int,
         color: str,
     ) -> None:
-        super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model
         self.memory = memory
         self.color = color
+        super().__init__(name, description, price, quantity)
+
+    def __repr__(self) -> str:
+        """Возвращает техническое представление смартфона."""
+        return (
+            f"{self.__class__.__name__}("
+            f"{self.name!r}, {self.description!r}, "
+            f"{self.price}, {self.quantity}, "
+            f"{self.efficiency}, {self.model!r}, "
+            f"{self.memory}, {self.color!r})"
+        )

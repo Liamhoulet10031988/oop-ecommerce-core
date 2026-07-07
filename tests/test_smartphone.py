@@ -37,3 +37,24 @@ def test_smartphone_is_product() -> None:
     )
 
     assert isinstance(smartphone, Product)
+
+
+def test_smartphone_print_mixin(capsys) -> None:
+    Smartphone(
+        "Samsung",
+        "local",
+        5.8,
+        2,
+        95.5,
+        "S20FE",
+        64,
+        "white",
+    )
+
+    message = capsys.readouterr().out
+
+    assert (
+        "Smartphone('Samsung', 'local', 5.8, 2, "
+        "95.5, 'S20FE', 64, 'white')"
+        in message
+    )

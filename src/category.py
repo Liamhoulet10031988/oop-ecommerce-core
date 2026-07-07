@@ -1,7 +1,8 @@
+from src.base_entity import BaseEntity
 from src.product import Product
 
 
-class Category:
+class Category(BaseEntity):
     """Класс для описания категории товаров интернет-магазина."""
 
     category_count = 0
@@ -51,3 +52,11 @@ class Category:
             total_quantity += product.quantity
 
         return f"{self.name}, количество продуктов: {total_quantity} шт."
+
+    def get_total_quantity(self) -> int:
+        total_quantity = 0
+
+        for product in self.product_objects:
+            total_quantity += product.quantity
+
+        return total_quantity

@@ -1,4 +1,8 @@
-class Product:
+from src.base_product import BaseProduct
+from src.print_mixin import PrintMixin
+
+
+class Product(PrintMixin, BaseProduct):
     """Класс для описания товара интернет-магазина."""
 
     def __init__(
@@ -12,6 +16,7 @@ class Product:
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__()
 
     @classmethod
     def new_product(
@@ -64,3 +69,11 @@ class Product:
             raise TypeError("Складывать можно только товары одного типа")
 
         return self.price * self.quantity + other.price * other.quantity
+
+    def __repr__(self) -> str:
+        """Возвращает техническое представление товара."""
+        return (
+            f"{self.__class__.__name__}("
+            f"{self.name!r}, {self.description!r}, "
+            f"{self.price}, {self.quantity})"
+        )

@@ -130,3 +130,11 @@ def test_product_add_rejects_different_product_classes() -> None:
 
     with pytest.raises(TypeError):
         smartphone + lawn_grass
+
+
+def test_product_print_mixin(capsys) -> None:
+    Product("Bread", "local", 5.8, 2)
+
+    message = capsys.readouterr().out
+
+    assert "Product('Bread', 'local', 5.8, 2)" in message
