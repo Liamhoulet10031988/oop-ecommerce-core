@@ -118,3 +118,17 @@ def test_add_product_rejects_not_product() -> None:
 
     with pytest.raises(TypeError):
         category.add_product("не товар")  # type: ignore[arg-type]
+
+
+def test_middle_price() -> None:
+    product1 = Product("Iphone 15", "512GB", 210000.0, 8)
+    product2 = Product("Xiaomi Redmi Note 11", "1024GB", 31000.0, 14)
+    category = Category("Smartphones", "Mobile phones", [product1, product2])
+
+    assert category.middle_price() == 120500.0
+
+
+def test_middle_price_empty_category() -> None:
+    category = Category("Empty", "No products", [])
+
+    assert category.middle_price() == 0

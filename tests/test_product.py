@@ -138,3 +138,11 @@ def test_product_print_mixin(capsys) -> None:
     message = capsys.readouterr().out
 
     assert "Product('Bread', 'local', 5.8, 2)" in message
+
+
+def test_product_zero_quantity_raises_error() -> None:
+    with pytest.raises(
+        ValueError,
+        match="Товар с нулевым количеством не может быть добавлен",
+    ):
+        Product("Бракованный товар", "Неверное количество", 1000.0, 0)

@@ -1,4 +1,5 @@
 from src.base_entity import BaseEntity
+from src.exceptions import ZeroQuantityProductError
 from src.product import Product
 
 
@@ -23,11 +24,23 @@ class Category(BaseEntity):
 
     def add_product(self, product: Product) -> None:
         """Добавляет товар в категорию."""
-        if not isinstance(product, Product):
-            raise TypeError("Можно добавлять только товары")
+        try:
+            if not isinstance(product, Product):
+                raise TypeError("Можно добавлять только товары")
 
-        self.__products.append(product)
-        Category.product_count += 1
+            if product.quantity == 0:
+                raise ZeroQuantityProductError()
+
+        except ZeroQuantityProductError as error:
+            print(error)
+
+        else:
+            self.__products.append(product)
+            Category.product_count += 1
+            print("Товар добавлен")
+
+        finally:
+            print("Обработка добавления товара завершена")
 
     @property
     def products(self) -> str:
@@ -60,3 +73,15 @@ class Category(BaseEntity):
             total_quantity += product.quantity
 
         return total_quantity
+
+    def middle_price(self) -> float:
+        """Возвращает среднюю цену товаров в категории."""
+        total_price = 0.0
+
+        for product in self.__products:
+            total_price += product.price
+
+        try:
+            return total_price / len(self.__products)
+        except ZeroDivisionError:
+            return 0

@@ -6,6 +6,14 @@ from src.product import Product
 from src.smartphone import Smartphone
 
 if __name__ == "__main__":
+    print("Проверка исключения при создании товара с нулевым количеством:")
+    try:
+        Product("Бракованный товар", "Неверное количество", 1000.0, 0)
+    except ValueError as error:
+        print(error)
+    else:
+        print("Товар с нулевым количеством был создан")
+
     print("Создание объектов:")
     print("PrintMixin автоматически печатает repr объекта.")
 
@@ -76,6 +84,17 @@ if __name__ == "__main__":
 
     print("Строковое представление категории:")
     print(category)
+
+    print("\nСредняя цена товаров в категории:")
+    print(category.middle_price())
+
+    print("\nСредняя цена товаров в пустой категории:")
+    empty_category = Category(
+        "Пустая категория",
+        "Категория без продуктов",
+        [],
+    )
+    print(empty_category.middle_price())
 
     print("\nСложение смартфонов:")
     print(smartphone1 + smartphone2)
