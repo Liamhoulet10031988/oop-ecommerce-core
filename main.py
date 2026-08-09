@@ -1,61 +1,119 @@
+from src.base_product import BaseProduct
 from src.category import Category
+from src.category_iterator import CategoryIterator
+from src.lawn_grass import LawnGrass
 from src.product import Product
-from src.utils import load_categories_from_json
-
+from src.smartphone import Smartphone
 
 if __name__ == "__main__":
-    product1 = Product(
+    print("Проверка исключения при создании товара с нулевым количеством:")
+    try:
+        Product("Бракованный товар", "Неверное количество", 1000.0, 0)
+    except ValueError as error:
+        print(error)
+    else:
+        print("Товар с нулевым количеством был создан")
+
+    print("Создание объектов:")
+    print("PrintMixin автоматически печатает repr объекта.")
+
+    product = Product(
+        "55 QLED 4K",
+        "Фоновая подсветка",
+        123000.0,
+        7,
+    )
+    smartphone1 = Smartphone(
         "Samsung Galaxy S23 Ultra",
-        "256GB, Gray color, 200MP camera",
+        "256GB, серый цвет, 200MP камера",
         180000.0,
         5,
+        95.5,
+        "S23 Ultra",
+        256,
+        "серый",
     )
-    product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
-    product3 = Product("Xiaomi Redmi Note 11", "1024GB, Blue", 31000.0, 14)
-
-    print(product1.name)
-    print(product1.description)
-    print(product1.price)
-    print(product1.quantity)
-
-    print(product2.name)
-    print(product2.description)
-    print(product2.price)
-    print(product2.quantity)
-
-    print(product3.name)
-    print(product3.description)
-    print(product3.price)
-    print(product3.quantity)
-
-    category1 = Category(
-        "Smartphones",
-        "Smartphones for communication and daily tasks",
-        [product1, product2, product3],
+    smartphone2 = Smartphone(
+        "Iphone 15",
+        "512GB, Gray space",
+        210000.0,
+        8,
+        98.2,
+        "15",
+        512,
+        "gray space",
     )
-
-    print(category1.name == "Smartphones")
-    print(category1.description)
-    print(len(category1.products))
-    print(category1.category_count)
-    print(category1.product_count)
-
-    product4 = Product("55 QLED 4K", "Background lighting", 123000.0, 7)
-    category2 = Category(
-        "TV",
-        "Modern TV for comfortable watching",
-        [product4],
+    lawn_grass1 = LawnGrass(
+        "Газонная трава",
+        "Элитная трава для газона",
+        500.0,
+        20,
+        "Россия",
+        "7 дней",
+        "зеленый",
+    )
+    lawn_grass2 = LawnGrass(
+        "Газонная трава 2",
+        "Быстрорастущая газонная трава",
+        700.0,
+        15,
+        "Германия",
+        "5 дней",
+        "темно-зеленый",
     )
 
-    print(category2.name)
-    print(category2.description)
-    print(len(category2.products))
-    print(category2.products)
+    category = Category(
+        "Товары для дома",
+        "Смартфоны и товары для участка",
+        [product, smartphone1],
+    )
+    category.add_product(smartphone2)
+    category.add_product(lawn_grass1)
+    category.add_product(lawn_grass2)
 
-    print(Category.category_count)
-    print(Category.product_count)
+    print("\nПроверка абстрактного класса BaseProduct:")
+    print(isinstance(product, BaseProduct))
+    print(isinstance(smartphone1, BaseProduct))
+    print(isinstance(lawn_grass1, BaseProduct))
 
-    categories_from_json = load_categories_from_json("products.json")
+    print("\nПорядок поиска методов Product через MRO:")
+    print(Product.__mro__)
 
-    print(len(categories_from_json))
-    print(len(categories_from_json[0].products))
+    print("\nСписок товаров категории:")
+    print(category.products)
+
+    print("Строковое представление категории:")
+    print(category)
+
+    print("\nСредняя цена товаров в категории:")
+    print(category.middle_price())
+
+    print("\nСредняя цена товаров в пустой категории:")
+    empty_category = Category(
+        "Пустая категория",
+        "Категория без продуктов",
+        [],
+    )
+    print(empty_category.middle_price())
+
+    print("\nСложение смартфонов:")
+    print(smartphone1 + smartphone2)
+
+    print("\nСложение газонной травы:")
+    print(lawn_grass1 + lawn_grass2)
+
+    print("\nПроверка, что Smartphone является Product:")
+    print(isinstance(smartphone1, Product))
+
+    print("\nПроверка, что LawnGrass является Product:")
+    print(isinstance(lawn_grass1, Product))
+
+    print("\nПроверка точного класса для сложения:")
+    print(type(smartphone1) is type(smartphone2))
+    print(type(smartphone1) is type(lawn_grass1))
+
+    print("\nПеребор товаров категории через CategoryIterator:")
+    iterator = CategoryIterator(category)
+
+    for product_item in iterator:
+        print(product_item)
